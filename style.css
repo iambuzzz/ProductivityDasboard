@@ -1,0 +1,889 @@
+/* root variables */
+/* ---------------------------------------------------------- */
+:root {
+  --pri: #f8f4e1;
+  --sec: #381c0a;
+  --tri1: #feba17;
+  --tri2: #74512d;
+  --red: red;
+  --green: rgb(9, 138, 89);
+  --blue: rgb(0, 191, 255);
+  --black: black;
+}
+
+/* Custom fonts */
+/* ---------------------------------------------------------- */
+@font-face {
+  font-family: Aeonik;
+  font-weight: 200;
+  src: url(./Aeonik/Aeonik-Light.ttf);
+}
+@font-face {
+  font-family: Aeonik;
+  font-weight: 500;
+  src: url(./Aeonik/Aeonik-Regular.ttf);
+}
+@font-face {
+  font-family: Aeonik;
+  font-weight: 700;
+  src: url(./Aeonik/Aeonik-Bold.ttf);
+}
+
+/* Global styles */
+/* ---------------------------------------------------------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: var(--pri);
+  font-family: Aeonik;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+#main {
+  height: 100%;
+  width: 100%;
+  position: relative; /* This is important for absolute children */
+  background-color: var(--sec); 
+}
+
+body {
+  background-color: var(--pri);
+  visibility: hidden;
+}
+
+body[data-loaded="true"] {
+  visibility: visible;
+}
+
+/* main styles */
+/* ---------------------------------------------------------- */
+
+/* Ensure main content areas have consistent horizontal padding */
+section.allElems,
+nav {
+  padding-left: 40px; /* Default for larger screens */
+  padding-right: 40px; /* Default for larger screens */
+}
+
+/* Specific padding for nav-top */
+nav {
+  padding-top: 30px; /* Keep top padding consistent for nav */
+  padding-bottom: 0; /* No bottom padding for nav */
+}
+
+/* Specific padding for allElems */
+section.allElems {
+  padding-top: 0; /* Header margin-top will create space */
+  padding-bottom: 10px;
+}
+
+.allElems header {
+  width: 100%;
+  background-image: url(https://images.unsplash.com/photo-1717361279773-b2e7ee713d2e?q=80&w=3869&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+  background-size: cover;
+  background-position: center;
+  margin-top: 20px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 25px 50px; /* Keep this for desktop for internal header padding */
+}
+
+/* Header text sizes - desktop */
+header .header1 h1 {
+  font-size: 80px;
+  font-weight: 700;
+  margin-bottom: 60px;
+}
+
+header .header1 h2 {
+  font-size: 40px;
+  font-weight: 500;
+}
+
+header .header1 h4 {
+  font-weight: 500;
+  font-size: 40px;
+}
+
+header .header2 h2 {
+  font-weight: 700;
+  font-size: 70px;
+}
+
+header .header2 h4 {
+  font-weight: 500;
+  margin-top: -10px;
+  margin-bottom: 45px;
+  font-size: 40px;
+}
+
+header .header2 h3 {
+  font-weight: 500;
+  font-size: 20px;
+  opacity: 0.8;
+}
+
+.allElems .allFeatures {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between; /* Use space-between for 4-column distribution */
+  gap: 20px; /* Adjust gap to allow more items per row easily */
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/* Updated .elem for 4-column default and responsiveness */
+.elem {
+  background-color: var(--tri1);
+  border-radius: 20px;
+  font-size: 20px;
+  height: 300px;
+
+  /* Default: 4 columns */
+  flex-basis: calc(
+    25% - 15px
+  ); /* (100% / 4) - (3/4 * gap) or (gap * 3 / 4) for 4 columns and gap */
+  /* (total gap in a row = 3*gap, divided by 4 items) */
+  /* Let's simplify calc: (100% - 3*gap) / 4 */
+  max-width: calc(25% - 15px); /* Max width for 4 columns */
+  min-width: 200px; /* Prevent shrinking too much before breakpoint */
+
+  flex-grow: 1; /* Allows elements to grow to fill space if fewer than 4 items in a row */
+  overflow: hidden;
+  position: relative;
+  transition: all ease 0.5s;
+  cursor: pointer;
+  box-shadow: 0 5px 20px rgba(24, 23, 23, 0.2);
+}
+.elem img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+.elem h2 {
+  position: absolute;
+  bottom: 4%;
+  right: 5%;
+  font-weight: 200;
+  font-size: 25px;
+}
+.elem:active {
+  scale: 0.97;
+}
+
+.fullElem {
+  height: 100%;
+  width: 100%;
+  background-color: var(--sec);
+  padding: 40px;
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  overflow-y: auto; /* Allows scrolling within the page */
+}
+
+.back {
+  position: absolute;
+  right: 5%;
+  top: 40px;
+  font-size: 30px;
+  border-radius: 50%;
+  padding: 10px 11px;
+  background-color: var(--tri2);
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all ease 0.3s;
+  z-index: 101; /* Ensure back button is on top */
+}
+.back:active {
+  scale: 0.97;
+}
+
+.fullPage-Todo h2 {
+  font-size: 60px;
+  margin-right: 80px;
+  margin-bottom: 20px; /* Added margin for spacing */
+}
+
+.fullPage-Todo .todo-container {
+  height: 82%;
+  width: 100%;
+  margin-top: 20px; /* Adjusted margin */
+  display: flex;
+  align-items: flex-start; /* Changed to flex-start */
+  justify-content: space-between;
+  gap: 20px; /* Added gap */
+}
+
+.fullPage-Todo .todo-container .addtask {
+  width: 33%;
+  background-color: var(--tri1);
+  height: 100%;
+  border-radius: 10px;
+  box-shadow: 0 0px 50px var(--tri1);
+}
+
+.fullPage-Todo .todo-container .addtask form {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  padding: 20px;
+  align-items: flex-start;
+}
+.todo-container .addtask form input {
+  width: 100%;
+  height: 15%;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 20px;
+  background-color: var(--tri2);
+  border: none;
+  outline: none;
+  margin-bottom: 15px;
+}
+.todo-container .addtask form textarea {
+  width: 100%;
+  height: 70%;
+  border-radius: 10px;
+  padding: 20px 20px;
+  font-size: 20px;
+  background-color: var(--tri2);
+  border: none;
+  outline: none;
+  margin-bottom: 10px;
+}
+input::placeholder,
+textarea::placeholder {
+  color: var(--pri);
+  opacity: 0.7;
+}
+.todo-container .addtask form #addTaskBtn {
+  width: 100%;
+  height: 50px;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 20px;
+  background-color: var(--tri2);
+  color: var(--pri);
+  border: none;
+  outline: none;
+  margin-bottom: 10px;
+  transition: all ease 0.3s;
+  cursor: pointer;
+}
+.todo-container .addtask form #addTaskBtn:active {
+  scale: 0.97;
+}
+
+.fullPage-Todo .todo-container .alltask {
+  width: 65%;
+  background-color: var(--tri1);
+  height: 100%;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 15px;
+  overflow: auto;
+  box-shadow: 0px 0px 50px var(--tri1);
+}
+
+.fullPage-Todo .todo-container .alltask .task {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--tri2);
+  min-height: 50px; /* Use min-height */
+  padding: 15px 15px 15px 30px; /* Adjusted padding */
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+.task-actions {
+  display: flex;
+  gap: 10px;
+}
+.fullPage-Todo .todo-container .alltask .task h5 {
+  color: var(--pri);
+  font-size: 25px;
+  font-weight: 500; /* Adjusted font weight */
+  word-break: break-word; /* Allow long words to break */
+}
+
+.tick-btn {
+  background-color: var(--tri2);
+  border: 2px solid var(--pri);
+  color: var(--pri);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 22px;
+  cursor: pointer;
+  transition: all ease 0.3s;
+}
+
+.delete-btn {
+  background-color: var(--tri2);
+  border: 2px solid var(--pri);
+  color: var(--pri);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 22px;
+  cursor: pointer;
+  transition: all ease 0.3s;
+}
+.tick-btn i,
+.delete-btn i {
+  color: inherit;
+  pointer-events: none;
+}
+
+.tick-btn.completed {
+  background-color: var(--green);
+  color: var(--pri);
+  border-color: var(--green);
+}
+.strike {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+.clearDataBtn {
+  width: 100%;
+  height: 50px;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 20px;
+  background-color: var(--tri2);
+  color: var(--pri);
+  border: none;
+  cursor: pointer;
+  transition: all ease 0.3s;
+  margin-top: auto; /* Push to the bottom */
+}
+.clearDataBtn:active {
+  scale: 0.97;
+}
+
+.confirm-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.confirm-box {
+  background-color: var(--pri);
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 300px;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+.confirm-message {
+  color: var(--sec);
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.confirm-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.confirm-actions button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.confirm-cancel {
+  background-color: #ccc;
+  color: #333;
+}
+
+.confirm-ok {
+  background-color: var(--sec);
+  color: var(--pri);
+}
+
+.confirm-modal.hidden {
+  display: none;
+}
+
+.fullPage-Daily h2 {
+  font-size: 60px;
+}
+.day-planner {
+  background-color: var(--tri1);
+  box-shadow: 0 0px 100px var(--tri1);
+  height: 85%;
+  width: 100%;
+  margin-top: 30px;
+  border-radius: 20px;
+  overflow: hidden; /* clips the scrollbar overflow */
+  padding: 25px 0 25px 25px;
+}
+.day-planner .scroll-wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden; /* hides horizontal scrollbar */
+  padding-right: 25px; /* adds space for the scrollbar */
+}
+.day-planner .day-planner-time {
+  width: 49%;
+  background-color: var(--tri2);
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 10%;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 15px;
+  margin-top: 1px;
+  padding-right: 10px;
+}
+.day-planner .day-planner-time input {
+  padding: 20px 25px;
+  width: 90%;
+  border: none;
+  outline: none;
+  background-color: var(--tri2);
+  font-size: 25px;
+  color: var(--pri);
+}
+.day-planner .day-planner-time p {
+  color: var(--pri);
+  width: 7%;
+  padding-left: 5px;
+  margin-left: 15px;
+  font-size: 12px;
+}
+.day-planner .day-planner-time .sep {
+  height: 30px;
+  margin-left: 15px;
+  width: 2px;
+  background-color: var(--pri);
+}
+
+.deletekrdo {
+  background-color: var(--tri2);
+  color: var(--pri);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  cursor: pointer;
+  transition: all ease 0.3s;
+  border: none;
+  outline: none;
+}
+
+.motivation-fullPage-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background-color: var(--sec);
+  box-sizing: border-box;
+}
+
+.motivational-fullpage .motivation-container {
+  width: 100%;
+  max-width: 900px;
+  position: relative;
+  border-radius: 40px;
+  z-index: 1;
+}
+
+.motivational-fullpage .motivation-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: var(--tri1);
+  border-radius: 40px;
+  filter: blur(80px);
+  z-index: 0;
+  transform: scale(1.1);
+}
+
+.motivational-fullpage .motivation-container .motivation-wrapper {
+  position: relative;
+  z-index: 2;
+  background-color: var(--tri1);
+  padding: 40px;
+  border-radius: 30px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.motivation-1 {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 30px;
+}
+
+.motivation-1 h2 {
+  background-color: var(--tri2);
+  padding: 15px 25px;
+  border-radius: 15px;
+  font-size: 24px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.motivation-2 {
+  margin-bottom: 30px;
+}
+
+.motivation-2 h1 {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--sec);
+  line-height: 1.4;
+}
+
+.motivation-3 {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.motivation-3 h2 {
+  background-color: var(--tri2);
+  padding: 15px 25px;
+  border-radius: 15px;
+  font-size: 22px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.motivation-wrapper img {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  height: 100px;
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@media (max-width: 600px) {
+  .motivation-2 h1 {
+    font-size: 24px;
+  }
+
+  .motivation-1 h2,
+  .motivation-3 h2 {
+    font-size: 16px;
+    padding: 10px 15px;
+  }
+
+  .motivation-wrapper img {
+    height: 70px;
+  }
+
+  .motivation-wrapper {
+    padding: 25px;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.pomodoro-fullpage h2 {
+  font-size: 50px;
+}
+
+.pomodoro-fullpage .pomo-timer {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -40%);
+  text-align: center;
+}
+
+.pomo-timer h1 {
+  font-size: 170px;
+}
+
+.pomo-timer button {
+  background-color: var(--tri2);
+  padding: 15px 40px;
+  font-size: 32px;
+  margin: 10px;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 7px 7px 0px var(--black);
+  transition: all ease 0.1s;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pomo-timer button:active {
+  box-shadow: 0px 0px 0px var(--black);
+}
+
+.pomodoro-fullpage .session {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, 40%);
+  background-color: var(--green);
+  padding: 15px 30px;
+  font-size: clamp(1.5rem, 2vw, 2.5rem);
+  border-radius: 5px;
+}
+
+/* Nav styles */
+.nav-in {
+  display: flex;
+  background-color: var(--tri2);
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 30px; /* Internal padding for nav-in */
+  border-radius: 10px;
+}
+
+.nav-in h2 {
+  font-size: 30px;
+  font-weight: 700;
+  flex-shrink: 1;
+  min-width: 0;
+}
+
+.theme {
+  background-color: var(--sec);
+  padding: 12px 20px;
+  border-radius: 10px;
+  transition: all ease 0.2s;
+  cursor: pointer;
+  flex-shrink: 0;
+  box-shadow: 4px 2px 8px rgb(0, 0, 0);
+}
+
+.theme h4 {
+  color: var(--pri);
+  font-weight: 700;
+  font-size: 20px;
+  pointer-events: none;
+  white-space: nowrap; /* Prevent text from wrapping within the button */
+}
+
+.theme:active {
+  scale: 0.96;
+}
+
+/* --- Media Queries for Responsive Layout --- */
+
+/* For screens where two columns are desired (e.g., tablets, larger phones) */
+@media (max-width: 992px) {
+  /* Slightly increased breakpoint for two columns */
+  /* Adjust main padding for smaller screens */
+  section.allElems,
+  nav {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .elem {
+    flex-basis: calc(
+      50% - 20px
+    ); /* Two columns, accounting for gap (40px gap / 2 = 20px per side) */
+    max-width: 100%; /* Ensure it doesn't grow beyond 50% minus gap */
+  }
+  .allElems .allFeatures {
+    justify-content: center;
+    gap: 40px;
+  }
+
+  /* Header adjustments for this size */
+  .allElems header {
+    padding: 20px 30px; /* Slightly reduce internal padding */
+  }
+  header .header1 h1 {
+    font-size: 65px; /* Reduce time size */
+    margin-bottom: 40px;
+  }
+  header .header1 h2 {
+    font-size: 35px; /* Reduce date/day size */
+  }
+  header .header1 h4 {
+    font-size: 35px; /* Reduce location size */
+  }
+  header .header2 h2 {
+    font-size: 60px; /* Reduce temperature size */
+  }
+  header .header2 h4,
+  header .header2 h3 {
+    font-size: 20px; /* Reduce weather details size */
+  }
+}
+
+/* For screens where one column is desired (e.g., mobile phones) */
+@media (max-width: 600px) {
+  /* Adjust breakpoint for single column */
+  /* Consistent padding for main elements */
+  section.allElems,
+  nav {
+    padding-left: 15px; /* Even smaller padding */
+    padding-right: 15px;
+  }
+
+  .allElems header {
+    flex-direction: column; /* Stack header content vertically */
+    align-items: flex-start;
+    padding: 20px; /* Smaller internal padding */
+  }
+
+  header .header1 h1 {
+    font-size: 40px; /* Further reduce time size */
+    margin-bottom: 15px;
+  }
+
+  header .header1 h2 {
+    font-size: 24px; /* Further reduce date/day size */
+  }
+  header .header1 h4 {
+    font-size: 24px; /* Further reduce location size */
+  }
+
+  /* Ensure header2 content also wraps/stacks nicely */
+  header .header2 {
+    width: 100%; /* Ensure it takes full width to prevent overflow */
+    margin-top: 20px; /* Add space between header1 and header2 when stacked */
+    text-align: left; /* Align its content to the left */
+    display: flex; /* Make header2 a flex container */
+    flex-direction: column; /* Stack its own content */
+    align-items: flex-start;
+  }
+  header .header2 h2 {
+    font-size: 45px; /* Further reduce temperature size */
+    margin-top: 0;
+    margin-bottom: 10px; /* Adjust spacing */
+  }
+  header .header2 h4 {
+    font-size: 18px; /* Further reduce "Light rain" size */
+    margin-bottom: 5px; /* Less margin when stacked */
+  }
+  header .header2 h3 {
+    font-size: 16px; /* Further reduce details size */
+    margin-bottom: 3px;
+  }
+
+  .allElems .allFeatures {
+    justify-content: center;
+    gap: 30px; /* Maybe reduce gap slightly on smaller screens */
+  }
+  .elem {
+    flex-basis: 100%; /* One column */
+    max-width: 100%; /* Constrain max width for readability */
+    height: 250px; /* Reduce height for smaller screens */
+  }
+  .elem h2 {
+    font-size: 22px;
+  }
+
+  /* Navigation adjustments for mobile */
+  .nav-in {
+    flex-direction: column; /* Stack nav items vertically */
+    align-items: center; /* Center them when stacked */
+    gap: 10px; /* Reduce gap between nav items */
+    padding: 15px; /* Adjust internal padding */
+  }
+  .nav-in h2 {
+    font-size: 22px; /* Reduce nav title size */
+    text-align: center;
+  }
+  .theme {
+    width: 100%; /* Make button full width */
+    text-align: center; /* Center text within button */
+    padding: 8px 12px; /* Adjust button padding */
+  }
+  .theme h4 {
+    font-size: 16px; /* Reduce button text size */
+    white-space: normal; /* Allow button text to wrap if necessary */
+  }
+}
+
+/* Optional: Very small screens (e.g., iPhone SE portrait) */
+@media (max-width: 400px) {
+  header .header1 h1 {
+    font-size: 35px;
+  }
+  header .header1 h2,
+  header .header1 h4 {
+    font-size: 20px;
+  }
+  header .header2 h2 {
+    font-size: 40px;
+  }
+  header .header2 h4,
+  header .header2 h3 {
+    font-size: 16px;
+  }
+  .nav-in h2 {
+    font-size: 18px;
+  }
+  .theme h4 {
+    font-size: 14px;
+  }
+  .elem {
+    height: 200px; /* Further reduce card height */
+  }
+}
