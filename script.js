@@ -252,23 +252,55 @@ document.addEventListener("DOMContentLoaded", () => {
   // MOTIVATION QUOTES
   // ------------------------------------------------------------------------
   async function fetchQuote() {
-    const motivationQuoteContent = document.querySelector(".motivation-2 h1");
-    const motivationAuthor = document.querySelector(".motivation-3 h2");
+  const motivationQuoteContent = document.querySelector(".motivation-2 h1");
+  const motivationAuthor = document.querySelector(".motivation-3 h2");
 
-    if (!motivationQuoteContent || !motivationAuthor) return;
+  if (!motivationQuoteContent || !motivationAuthor) return;
 
+  // --- 1. First Try: quotable.io ---
+  try {
+    const response = await fetch("https://api.quotable.io/random");
+    if (!response.ok) {
+      // If the server responded with an error (like 404),
+      // throw an error to trigger the 'catch' block.
+      throw new Error(`Quotable API failed with status: ${response.status}`);
+    }
+    const data = await response.json();
+    motivationQuoteContent.innerHTML = data.content;
+    motivationAuthor.innerHTML = data.author;
+
+  } catch (err1) {
+    // This 'catch' block runs if the first API fails
+    console.warn("First API (quotable.io) failed:", err1.message);
+    
+    // --- 2. Second Try: zenquotes.io ---
     try {
-      const response = await fetch("https://api.quotable.io/random");
+      // NOTE: zenquotes can sometimes be blocked by CORS.
+      // If it fails, you may need a proxy URL like:
+      // "https://cors-anywhere.herokuapp.com/https://zenquotes.io/api/random"
+      const response = await fetch("https://zenquotes.io/api/random");
+      if (!response.ok) {
+        throw new Error(`Zenquotes API failed with status: ${response.status}`);
+      }
       const data = await response.json();
-      motivationQuoteContent.innerHTML = data.content;
-      motivationAuthor.innerHTML = data.author;
-    } catch (err) {
+      
+      // Use the correct format for ZenQuotes: data[0].q and data[0].a
+      motivationQuoteContent.innerHTML = data[0].q;
+      motivationAuthor.innerHTML = data[0].a;
+
+    } catch (err2) {
+      // This 'catch' block runs if the second API ALSO fails
+      console.error("Second API (zenquotes.io) also failed:", err2.message);
+      
+      // --- 3. Fallback: Hardcoded Quote ---
       motivationQuoteContent.innerHTML = "“Stay strong. This too shall pass.”";
       motivationAuthor.innerHTML = "Anonymous";
-      console.error("Quote fetch error:", err);
     }
   }
-  fetchQuote();
+}
+
+// Call the function
+fetchQuote();
 
   //-------------------------------------------------------------------------
   // POMODORO TIMER
