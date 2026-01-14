@@ -1,4 +1,5 @@
-# 🧠 Productivity Dashboard
+# 🧠 Productivity Dashboard 
+### `Desktop view only`
 ---
 #### Live Link : https://productivitydasboard.onrender.com/
 ---
